@@ -64,7 +64,7 @@ int main()
 		std::cout << "Error: unable to open file " << "out.txt" << " for writing" << '\n';
 		return -3;
 	}
-	
+	fout << count << std::endl;
 	
 	
 	for (int i = 0; i < count; ++i)
