@@ -6,35 +6,26 @@
 #include <fstream>
 #include <Windows.h>
 
-class adress
+
+
+class address
 {
 public:
-	
-	void fread(std::ifstream& fin)
-	{
-		fin >> city;
-		fin >> street;
-		fin >> house_number;
-		fin >> apartment;
-	}
-	void write(std::ofstream& fout)
-	{
-		fout << city << ", " << street << ", " << house_number << ", " << apartment << std::endl;
-	}
+	address() { city, street, house, apartment; }
 
+	std::string get_output_address(std::string ci, std::string st, int hou, int apart)
+	{
+		std::string a = std::to_string(hou);
+		std::string b = std::to_string(apart);
+		std::string out_add = (ci + ", " + st + ", " + a + ", " + b);
+		return out_add;
+	}
 
 
 private:
-	std::string city;
-	std::string street;
-	int house_number;
-	int apartment;
-
-
+	std::string city = { 0 }, street = { 0 };
+	int house = 0; int apartment = 0;
 };
-
-
-
 
 
 
@@ -43,40 +34,59 @@ int main()
 {
 	setlocale(LC_ALL, "RUS");
 	SetConsoleCP(1251);
-	adress adr;
-	
+
 	std::ifstream fin;
 	fin.open("in.txt");
 	if (!fin.is_open()) {
-		std::cout << "Error: unable to open file " << "in.txt" << " for writing" << '\n';
+		std::cout << "Error: файл не открыт " << "in.txt" << '\n';
 		return -1;
 	}
-	int count = 0;
-	fin >> count;
-	if (count <= 0)
+	int size = 0;
+	fin >> size;
+	if (size <= 0)
 	{
-		std::cout << "Ошибка: недопустимый размер  " << count << '\n';
+		std::cout << "Ошибка: недопустимый размер  " << size << '\n';
 		return -2;
 	}
+
+
+	address* add = new address[size];
+
+	std::string a;
+	std::string b;
+	int c;
+	int d;
+	std::string* result = new std::string[size];
+
+	for (int i = 0; i < size; ++i)
+	{
+
+		fin >> a;
+		fin >> b;
+		fin >> c;
+		fin >> d;
+
+		result[i] = add[i].get_output_address(a, b, c, d);
+	}
+
+	fin.close();
+	
+
 	std::ofstream fout;
 	fout.open("out.txt");
-	if (!fin.is_open()) {
+	if (!fout.is_open()) {
 		std::cout << "Error: unable to open file " << "out.txt" << " for writing" << '\n';
 		return -3;
 	}
-	fout << count << std::endl;
-	
-	
-	for (int i = 0; i < count; ++i)
+	fout << size << std::endl;
+
+	for (int i = size-1; i >= 0; --i)
 	{
-		adr.fread(fin);
-		adr.write(fout);
+		fout << result[i] << std::endl;;
+
+
 	}
-	fin.close();
 	fout.close();
-
-
-
-
+	delete[] add;
+	delete[] result;
 }
-
