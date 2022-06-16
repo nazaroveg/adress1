@@ -11,9 +11,9 @@
 class address
 {
 public:
-	address() { city, street, house, apartment; }
-
-	std::string get_output_address(std::string ci, std::string st, int hou, int apart)
+	address(std::string, std::string, int, int)  { city, street, house, apartment; }        //сюда только,  точное кол-во аргументов и точный тип.*
+	address(){}																				//конструктор по умолчанию сюда можено передавать объекты класса.любые. при оъявлении в main+-
+	std::string get_output_address(std::string ci, std::string st, int hou, int apart)     //* как пот здесь
 	{
 		std::string a = std::to_string(hou);
 		std::string b = std::to_string(apart);
@@ -50,18 +50,18 @@ int main()
 	}
 
 
-	address* add = new address[size];
+	address* add = new address[size];  //создаем динамический массив класса
 
 	std::string a;
 	std::string b;
 	int c;
 	int d;
-	std::string* result = new std::string[size];
+	std::string* result = new std::string[size];   //создаем динам массив string
 
 	for (int i = 0; i < size; ++i)
 	{
 
-		fin >> a;
+		fin >> a;                      //читаем данные и переводим из " c И d" в string
 		fin >> b;
 		fin >> c;
 		fin >> d;
